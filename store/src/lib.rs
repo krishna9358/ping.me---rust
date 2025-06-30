@@ -1,5 +1,14 @@
-pub struct Store{
 
+pub struct Store{
+    conn : Connection
+}
+
+impl Default for Store{
+    fn default() -> Self {
+        Self{
+            conn
+        }
+    }
 }
 
 impl Store{

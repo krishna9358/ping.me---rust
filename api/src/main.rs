@@ -20,13 +20,12 @@ fn get_website(Path(name): Path<String>) -> String {
 // Post Endpoint for creating website
 // In TypeScript, this would be like:
 // function createWebsite(data: { url: string }): { id: string }
-
 // automatically parse JSON request bodies into JavaScript objects.
 // It handles deserialization of the incoming JSON into our CreateWebsteInput struct
 // and serialization of our CreateWebsteOutput struct back into JSON.
 #[handler]
 fn create_website(Json(data): Json<CreateWebsteInput>) -> Json<CreateWebsteOutput> {
-    let url = data.url;
+    let _url = data.url;
     
     let s = Store{};
     let id = s.create_website();
