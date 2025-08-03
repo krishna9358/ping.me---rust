@@ -1,5 +1,8 @@
 use poem::{
-    get, handler, listener::TcpListener, post, web::{Json, Path}, Route, Server
+    Route, Server, get, handler,
+    listener::TcpListener,
+    post,
+    web::{Json, Path},
 };
 
 use crate::{request_input::CreateWebsteInput, request_output::CreateWebsteOutput};
@@ -11,11 +14,8 @@ pub mod request_output;
 #[handler]
 // path is used for params (/:sdfjladsfj)
 fn get_website(Path(name): Path<String>) -> String {
-    let s = Store{};
-    s.create_user();
     format!("hello: {name}")
 }
-
 
 // Post Endpoint for creating website
 // In TypeScript, this would be like:
@@ -26,23 +26,21 @@ fn get_website(Path(name): Path<String>) -> String {
 #[handler]
 fn create_website(Json(data): Json<CreateWebsteInput>) -> Json<CreateWebsteOutput> {
     let _url = data.url;
-    
-    let s = Store{};
+
+    let s = Store {};
     let id = s.create_website();
-    // persist it in db 
-    // sqlx => postgreqs with raw sql
+    // persist it in db
+    // sqlx => postgreqs with raw sql like pg
     // diesel => prisma (orm)
-    let resposne =  CreateWebsteOutput{
-        id
-    };
+    let resposne: CreateWebsteOutput = CreateWebsteOutput { id: _url };
     Json(resposne)
 }
 
 #[tokio::main]
 async fn main() -> Result<(), std::io::Error> {
     let app = Route::new()
-            .at("/website/:name", get(get_website))
-            .at("/website/", post(create_website));
+        .at("/website/:name", get(get_website))
+        .at("/website/", post(create_website));
     Server::new(TcpListener::bind("0.0.0.0:3000"))
         .name("better-uptime")
         .run(app)
