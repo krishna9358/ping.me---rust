@@ -1,11 +1,11 @@
 use crate::store::Store;
 
 impl Store {
-    pub fn create_user(&self) {
-        println!("Hello world")
+    pub fn signin(&self, email: String, password: String) -> String {
+        String::from("1")
     }
 
-    pub fn get_user(&self) -> String {
+    pub fn signup(&self, email: String, password: String) -> String {
         String::from("1")
     }
 }

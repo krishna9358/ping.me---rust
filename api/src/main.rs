@@ -6,7 +6,7 @@ use poem::{
 };
 
 use crate::{request_input::CreateWebsteInput, request_output::CreateWebsteOutput};
-use store::Store;
+use store::store::Store;
 pub mod request_input;
 pub mod request_output;
 
@@ -27,8 +27,8 @@ fn get_website(Path(name): Path<String>) -> String {
 fn create_website(Json(data): Json<CreateWebsteInput>) -> Json<CreateWebsteOutput> {
     let _url = data.url;
 
-    let s = Store {};
-    let id = s.create_website();
+    let s = Store::default().expect("Failed to connect to database");
+    // let id = s.create_website();
     // persist it in db
     // sqlx => postgreqs with raw sql like pg
     // diesel => prisma (orm)
